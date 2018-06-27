@@ -1,7 +1,10 @@
 ##运行步骤
-1. cd src/main/java目录
-2. 执行javac com/cyssxt/main/Application.java
-3. 执行java com.cyssxt.main.Application
+1. 进到代码目录 
+<pre><code>cd src/main/java</code></pre>
+2. 执行
+<pre><code>javac com/cyssxt/main/Application.java</code></pre>
+3. 执行
+<pre><code>java com.cyssxt.main.Application</code></pre>
 4. 输入
 <pre>
 5 5 回车
@@ -15,3 +18,7 @@ MMRMMRMRRM 回车
 1 3 N
 5 1 E
 </pre>
+5. 执行测试用例
+<pre><code>
+java com.cyssxt.main.Application
+</code></pre>
