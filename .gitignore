@@ -1,2 +1,4 @@
 configs/
 .Archive/
+.idea
+mars-rover.iml
