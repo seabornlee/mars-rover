@@ -1,6 +1,7 @@
 package com.cyssxt.main;
-import java.util.Scanner;
+import org.junit.Test;
 
+import java.util.Scanner;
 /**
  * Created by zqy on 2018/6/26.
  */
@@ -27,17 +28,14 @@ public class Application {
         private char face;
         private char currentFace;
 
-        public Point(int x, int y,char face) {
-            this.x = x;
-            this.y = y;
-            this.face = face;
-            this.index = getDirIndex(face);
-            this.currentIndex = this.index;
-            this.currentFace = face;
-        }
-
         public Point(String line){
-            this(Integer.valueOf(line.split(" ")[0]),Integer.valueOf(line.split(" ")[1]),line.split(" ")[2].charAt(0));
+            String[] words = line.split(" ");
+            this.x = Integer.valueOf(words[0]);
+            this.y = Integer.valueOf(words[1]);
+            this.face = words[2].charAt(0);
+            this.index = getDirIndex(this.face);
+            this.currentFace = face;
+            this.currentIndex = this.index;
         }
 
         public void nextIndex(char cmd){
@@ -63,39 +61,8 @@ public class Application {
             return y;
         }
 
-        public void setY(int y) {
-            this.y = y;
-        }
-        public char getFace() {
-            return face;
-        }
-
-        public void setFace(char face) {
-            this.face = face;
-        }
-
-        public char getCurrentFace() {
-            return currentFace;
-        }
-
-        public void setCurrentFace(char currentFace) {
-            this.currentFace = currentFace;
-        }
-
         public int getCurrentIndex() {
             return currentIndex;
-        }
-
-        public void setCurrentIndex(int currentIndex) {
-            this.currentIndex = currentIndex;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
         }
 
         public String toResult() {
@@ -107,28 +74,15 @@ public class Application {
          * @param cmdStr
          */
         public void cmd(String cmdStr){
-            Point point = this;
             String cmd = cmdStr.toUpperCase();
             for(int i=0;i<cmd.length();i++){
                 char word = cmd.charAt(i);
                 if('M'==word){
-                    int index = point.getCurrentIndex();
-                    switch (index){
-                        case 0:
-                            point.y = point.y+1;
-                            break;
-                        case 1:
-                            point.x = point.x+1;
-                            break;
-                        case 2:
-                            point.y = point.y-1;
-                            break;
-                        case 3:
-                            point.x = point.x-1;
-                            break;
-                    }
+                    int index = this.getCurrentIndex();
+                    this.y += (1-index)*((index+1)%2);
+                    this.x += (2-index)*((index)%2);
                 }else{
-                    point.nextIndex(word);
+                    this.nextIndex(word);
                 }
             }
         }
@@ -137,7 +91,8 @@ public class Application {
     /**
      * 提供案例的测试用例
      */
-    public static void testCase(){
+    @Test
+    public void testCase(){
         String[] pointStr = {
                 "5 5",
                 "1 2 N",
@@ -153,23 +108,12 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        if(args.length==1){
-            testCase();
-            return;
-        }
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
-        //第一次命令输入
         String result1 = calc(scanner);
-        //第二次命令输入
         String result2 = calc(scanner);
         System.out.println(result1);
         System.out.println(result2);
-//        Scanner scanner = new Scanner(System.in);
-//        String text = scanner.next();
-//        System.out.println(text);
-//        String test1 = scanner.next();
-//        System.out.println(test1);
     }
 
     private static String calc(Scanner scanner) {
@@ -186,7 +130,7 @@ public class Application {
                 System.out.println("输入有误请重新输入");
             }
         }
-        if(1>=10){
+        if(i>=10){
             System.out.println("异常终端");
             System.exit(0);
         }
