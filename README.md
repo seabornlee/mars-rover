@@ -50,3 +50,13 @@ MMRMMRMRRM
 **Output:**  
 1 3 N  
 5 1 E
+
+### The Environment
+JDK1.8
+JUnit4.12
+
+### The Demo
+1. Clone this repository
+2. Include the dependency library: jdk & junit
+3. Run test cases in test directory
+4. Run nasa.mars.rovers.RoverConsole.main()
