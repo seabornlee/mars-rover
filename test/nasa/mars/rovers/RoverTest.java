@@ -3,10 +3,8 @@ package nasa.mars.rovers;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.util.Scanner;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by lin on 2018/7/21.
@@ -24,40 +22,45 @@ public class RoverTest {
         rover = new Rover(plateau, 30, 40, Rover.Orientation.UP);
     }
 
+    // 测试非法输入
     @Test
-    public void move() throws Exception {
-
-        // 测试非法输入
-        RoverConsole.scan = new Scanner(new ByteArrayInputStream("SSS".getBytes()));
-        rover.execute();
+    public void testIllegalInstructions() throws Exception {
+        rover.execute("SSS");
         assertArrayEquals(new int[]{30, 40}, new int[]{rover.getX(), rover.getY()});
         assertEquals(Rover.Orientation.UP, rover.getOrientation());
+    }
 
-        // 移动一步
-        RoverConsole.scan = new Scanner(new ByteArrayInputStream("M".getBytes()));
-        rover.execute();
+    // 移动一步
+    @Test
+    public void testNormalInstructions() throws Exception {
+        rover.execute("M");
         assertArrayEquals(new int[]{30, 41}, new int[]{rover.getX(), rover.getY()});
         assertEquals(Rover.Orientation.UP, rover.getOrientation());
+    }
 
-        // 转换方向
-        RoverConsole.scan = new Scanner(new ByteArrayInputStream("LL".getBytes()));
-        rover.execute();
-        assertArrayEquals(new int[]{30, 41}, new int[]{rover.getX(), rover.getY()});
-        assertEquals(Rover.Orientation.DOWN, rover.getOrientation());
+    // 转换方向
+    @Test
+    public void testTurnAround() throws Exception {
+        rover.execute("MRM");
+        assertArrayEquals(new int[]{31, 41}, new int[]{rover.getX(), rover.getY()});
+        assertEquals(Rover.Orientation.RIGHT, rover.getOrientation());
+    }
 
-        // 多个指令连续执行
-        RoverConsole.scan = new Scanner(new ByteArrayInputStream("MMRMMRMRRM".getBytes()));
-        rover.execute();
-        assertArrayEquals(new int[]{28, 39}, new int[]{rover.getX(), rover.getY()});
-        assertEquals(Rover.Orientation.DOWN, rover.getOrientation());
-
-        // 超出边界
-        RoverConsole.scan = new Scanner(new ByteArrayInputStream("RRMMMMMMMMMMMMMMM".getBytes()));
-        rover.execute();
-        assertArrayEquals(new int[]{28, plateau.getWidth()}, new int[]{rover.getX(), rover.getY()});
+    // 多个指令连续执行
+    @Test
+    public void testMultiInstructions() throws Exception {
+        rover.execute("MMRMMRMRRM");
+        rover.execute("LMLMLMLMM");
+        assertArrayEquals(new int[]{32, 43}, new int[]{rover.getX(), rover.getY()});
         assertEquals(Rover.Orientation.UP, rover.getOrientation());
+    }
 
-        System.setIn(System.in);
+    // 超出边界
+    @Test
+    public void testOutOfRange() throws Exception {
+        rover.execute("MMMMMMMMMMMMMMM");
+        assertArrayEquals(new int[]{30, plateau.getWidth()}, new int[]{rover.getX(), rover.getY()});
+        assertEquals(Rover.Orientation.UP, rover.getOrientation());
     }
 
 }

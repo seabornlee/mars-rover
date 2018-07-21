@@ -1,10 +1,6 @@
 package nasa.mars.rovers;
 
-import java.util.Scanner;
-import java.util.regex.Pattern;
-
 import static nasa.mars.rovers.Rover.Orientation.*;
-import static nasa.mars.rovers.RoverConsole.scan;
 
 /**
  * 漫游者机器人
@@ -72,16 +68,10 @@ public class Rover {
     }
 
     /**
-     * 执行一系列的操作指令
+     * 执行一串移动指令
+     * @param instructions
      */
-    public void execute() {
-        System.out.println("please input the instructions for this rover:");
-        String instructions = scan.nextLine();
-        String pattern = "(L|R|M)+";
-        // 输入的指令格式校验
-        if (null == instructions || !Pattern.matches(pattern, instructions)) {
-            System.err.println("invalid instructions, please retry");
-        }
+    public void execute(String instructions) {
         for (int i=0; i<instructions.length(); i++) {
             char c = instructions.charAt(i);
             /*
@@ -107,7 +97,6 @@ public class Rover {
                     return;
             }
         }
-
     }
 
     /**
@@ -150,25 +139,6 @@ public class Rover {
 
     public Rover(Plateau plateau) {
         this.plateau = plateau;
-        System.out.println("please input the initial position of the rover:");
-        while (true) {
-            /*
-             * 校验输入的机器人坐标是否合法
-             */
-            String position = scan.nextLine();
-            if (null == position || !Pattern.matches("^\\d+\\s\\d+\\s(N|E|S|W)$", position)) {
-                System.err.println("invalid position, plase retry again:");
-                continue;
-            }
-            /*
-             * 保存输入的坐标
-             */
-            String[] coordinatesArray = position.split(" ");
-            this.x = Integer.valueOf(coordinatesArray[0]);
-            this.y = Integer.valueOf(coordinatesArray[1]);
-            this.orientation = Orientation.getOrientation(coordinatesArray[2]);
-            break;
-        }
     }
 
     public Integer getX() {
