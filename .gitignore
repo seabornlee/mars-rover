@@ -1,2 +1,5 @@
 configs/
 .Archive/
+.idea/
+.gradle/
+out/
