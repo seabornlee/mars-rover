@@ -50,3 +50,7 @@ MMRMMRMRRM
 **Output:**  
 1 3 N  
 5 1 E
+
+### Usage
+1. gradle 4.0
+2. jdk 1.8.0
