@@ -12,7 +12,7 @@ public class RoverTest {
         Assert.assertNotNull(Rover.land(" ").getPosition());
         Assert.assertNotNull(Rover.land("12").getPosition());
         Assert.assertNotNull(Rover.land("1 2").getPosition());
-        Assert.assertNotNull( Rover.land("1 2 ").getPosition());
+        Assert.assertNotNull(Rover.land("1 2 ").getPosition());
         Assert.assertNotNull(Rover.land("a b N").getPosition());
         Assert.assertNotNull(Rover.land("a b c").getPosition());
         Assert.assertNotNull(Rover.land("1 1 F").getPosition());
@@ -21,7 +21,7 @@ public class RoverTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetStatusString() {
-        Assert.assertNotNull( Rover.land(null).getStatusString());
+        Assert.assertNotNull(Rover.land(null).getStatusString());
         Assert.assertNotNull(Rover.land("").getStatusString());
         Assert.assertNotNull(Rover.land(" ").getStatusString());
         Assert.assertNotNull(Rover.land("12").getStatusString());
@@ -57,42 +57,42 @@ public class RoverTest {
         try {
             rover.explore(null, null);
         } catch (Exception e) {
-            Assert.assertEquals(IllegalArgumentException.class,e.getClass());
+            Assert.assertEquals(IllegalArgumentException.class, e.getClass());
         }
 
         try {
             rover.explore(plateau, null);
         } catch (Exception e) {
-            Assert.assertEquals(IllegalArgumentException.class,e.getClass());
+            Assert.assertEquals(IllegalArgumentException.class, e.getClass());
         }
 
         try {
             rover.explore(plateau, "11");
-            Assert.assertEquals(rover.getStatusString(),"1 2 N");
+            Assert.assertEquals(rover.getStatusString(), "1 2 N");
         } catch (Exception e) {
-            Assert.assertEquals(IllegalArgumentException.class,e.getClass());
+            Assert.assertEquals(IllegalArgumentException.class, e.getClass());
         }
 
         try {
             rover.explore(plateau, "asfa");
-            Assert.assertEquals(rover.getStatusString(),"1 2 N");
+            Assert.assertEquals(rover.getStatusString(), "1 2 N");
         } catch (Exception e) {
-            Assert.assertEquals(IllegalArgumentException.class,e.getClass());
+            Assert.assertEquals(IllegalArgumentException.class, e.getClass());
         }
 
         try {
             rover.explore(plateau, "LMRdfa");
-            Assert.assertEquals(rover.getStatusString(),"1 2 N");
+            Assert.assertEquals(rover.getStatusString(), "1 2 N");
         } catch (Exception e) {
-            Assert.assertEquals(IllegalArgumentException.class,e.getClass());
+            Assert.assertEquals(IllegalArgumentException.class, e.getClass());
         }
 
-        Assert.assertEquals(rover.getStatusString(),"1 2 N");
+        Assert.assertEquals(rover.getStatusString(), "1 2 N");
         rover.explore(plateau, "LML");
-        Assert.assertEquals(rover.getStatusString(),"0 2 S");
+        Assert.assertEquals(rover.getStatusString(), "0 2 S");
         rover.explore(plateau, "MLM");
-        Assert.assertEquals(rover.getStatusString(),"1 1 E");
+        Assert.assertEquals(rover.getStatusString(), "1 1 E");
         rover.explore(plateau, "LMM");
-        Assert.assertEquals(rover.getStatusString(),"1 3 N");
+        Assert.assertEquals(rover.getStatusString(), "1 3 N");
     }
 }

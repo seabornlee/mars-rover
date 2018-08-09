@@ -10,13 +10,13 @@ public enum Direction {
     public static Direction rotate90Angle(Direction direction, boolean left) {
         switch (direction) {
             case N:
-                return left?W:E;
+                return left ? W : E;
             case S:
-                return left?E:W;
+                return left ? E : W;
             case E:
-                return left?N:S;
+                return left ? N : S;
             case W:
-                return left?S:N;
+                return left ? S : N;
             default:
                 return direction;
         }

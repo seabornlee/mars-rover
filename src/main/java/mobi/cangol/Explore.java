@@ -9,11 +9,6 @@ public class Explore {
 
         Controller controller = new Controller();
         try {
-//            controller.initPlateau("5 5");
-//            controller.addRover("1 2 N", "LMLMLMLMM");
-//            controller.addRover( "3 3 E", "MMRMMRMRRM");
-//            controller.startExplore();
-
             controller.initPlateau(inputConsole());
             controller.addRover(inputConsole(), inputConsole());
             controller.addRover(inputConsole(), inputConsole());

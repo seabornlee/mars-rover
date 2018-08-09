@@ -28,9 +28,9 @@ public class ControllerTest {
     public void testStartExplore() {
         Controller controller = new Controller();
         Assert.assertNotNull(controller.initPlateau("5 5"));
-        Assert.assertNotNull(controller.addRover("1 2 N","LMLMLMLMM"));
+        Assert.assertNotNull(controller.addRover("1 2 N", "LMLMLMLMM"));
         controller.startExplore();
-        Assert.assertEquals(controller.getRovers().get(0).getStatusString(),"1 3 N");
+        Assert.assertEquals(controller.getRovers().get(0).getStatusString(), "1 3 N");
     }
 
     @Test
