@@ -102,28 +102,28 @@ public class Rover {
         }
     }
 
-    public void start() {
+    private void start() {
         this.running=true;
     }
 
-    public void stop() {
+    private void stop() {
         this.running=false;
         System.out.println(this.getStatusString());
     }
 
 
     public static Rover land(String command) {
-        if(command==null||"".equals(command)||command.isEmpty()){
+        if(null==command||"".equals(command)||command.isEmpty()){
             throw  new IllegalArgumentException("error command!");
         }
         String[] array=command.split(" ");
         if(array.length!=3){
             throw  new IllegalArgumentException("error command!");
         }else{
-            int x=0;
-            int y=0;
-            Direction direction = null;
-            Rover rover=null;
+            int x;
+            int y;
+            Direction direction;
+            Rover rover;
             try {
                 x=Integer.valueOf(array[0]);
             }catch (IllegalArgumentException e){
@@ -146,7 +146,7 @@ public class Rover {
     }
 
     public void explore(Plateau plateau, String command){
-        if(command==null||"".equals(command)||command.isEmpty()){
+        if(null==command||"".equals(command)||command.isEmpty()){
             throw  new IllegalArgumentException("error command!");
         }
         if(!Pattern.compile("[L|R|M]+?").matcher(command).matches()){

@@ -13,8 +13,9 @@ public class Controller {
         commands = new ArrayList<>();
     }
 
-    public void initPlateau(String command) {
+    public Plateau initPlateau(String command) {
         this.plateau = Plateau.initInstance(command);
+        return this.plateau;
     }
 
     public Rover addRover(String landCommand, String exploreCommand) {
@@ -24,9 +25,12 @@ public class Controller {
         return rover;
     }
 
+    public List<Rover> getRovers() {
+        return rovers;
+    }
 
     public void startExplore() {
-        Rover rover = null;
+        Rover rover;
         for (int i = 0; i < rovers.size(); i++) {
             rover = rovers.get(i);
             rover.explore(plateau, commands.get(i));

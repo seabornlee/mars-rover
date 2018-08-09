@@ -13,20 +13,20 @@ public class Plateau {
     }
 
     public static Plateau initInstance(String command){
-        if(command==null||"".equals(command)||command.isEmpty()){
+        if(null==command||"".equals(command)||command.isEmpty()){
             throw  new IllegalArgumentException("error command!");
         }
         String[] array=command.split(" ");
         if(array.length!=2){
             throw  new IllegalArgumentException("error command!");
         }else{
-            int x=0;
+            int x;
             try {
                 x=Integer.valueOf(array[0]);
             }catch (IllegalArgumentException e){
                 throw  new IllegalArgumentException("error command! x{"+array[0]+"} is Invalid");
             }
-            int y=0;
+            int y;
             try {
                 y=Integer.valueOf(array[1]);
             }catch (IllegalArgumentException e){
