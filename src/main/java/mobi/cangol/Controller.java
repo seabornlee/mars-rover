@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Controller {
     private Plateau plateau;
-    private List<Rover> rovers;
-    private List<String> commands;
+    private final List<Rover> rovers;
+    private final List<String> commands;
 
-    public Controller() {
+    protected Controller() {
         rovers = new ArrayList<>();
         commands = new ArrayList<>();
     }

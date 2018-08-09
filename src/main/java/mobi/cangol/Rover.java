@@ -3,13 +3,13 @@ package mobi.cangol;
 import java.util.regex.Pattern;
 
 public class Rover {
+    private static final String COMMAND_ERROR = "error command!";
     private static final char COMMAND_L = 'L';
     private static final char COMMAND_R = 'R';
     private static final char COMMAND_M = 'M';
     private int x;
     private int y;
     private Direction direction;
-    private boolean running;
 
     private Rover(int x, int y, Direction direction) {
         this.x = x;
@@ -61,23 +61,14 @@ public class Rover {
         this.direction = Direction.rotate90Angle(this.direction, false);
     }
 
-    private void start() {
-        this.running = true;
-    }
-
-    private void stop() {
-        this.running = false;
-        System.out.println(this.getStatusString());
-    }
-
 
     public static Rover land(String command) {
         if (null == command || "".equals(command) || command.isEmpty()) {
-            throw new IllegalArgumentException("error command!");
+            throw new IllegalArgumentException(COMMAND_ERROR);
         }
         String[] array = command.split(" ");
         if (array.length != 3) {
-            throw new IllegalArgumentException("error command!");
+            throw new IllegalArgumentException(COMMAND_ERROR);
         } else {
             int x;
             int y;
@@ -86,17 +77,17 @@ public class Rover {
             try {
                 x = Integer.valueOf(array[0]);
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("error command! x{" + array[0] + "} is Invalid");
+                throw new IllegalArgumentException("error command! x=" + array[0] + " is Invalid");
             }
             try {
                 y = Integer.valueOf(array[1]);
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("error command! y{" + array[1] + "} is Invalid");
+                throw new IllegalArgumentException("error command! y=" + array[1] + " is Invalid");
             }
             try {
                 direction = Direction.valueOf(array[2]);
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("error command! Direction{" + array[2] + "} is Invalid");
+                throw new IllegalArgumentException("error command! Direction=" + array[2] + "is Invalid");
             }
 
             rover = new Rover(x, y, direction);
@@ -106,12 +97,11 @@ public class Rover {
 
     public void explore(Plateau plateau, String command) {
         if (null == command || "".equals(command) || command.isEmpty()) {
-            throw new IllegalArgumentException("error command!");
+            throw new IllegalArgumentException(COMMAND_ERROR);
         }
         if (!Pattern.compile("[L|R|M]+?").matcher(command).matches()) {
-            throw new IllegalArgumentException("error command!");
+            throw new IllegalArgumentException(COMMAND_ERROR);
         }
-        this.start();
         for (int i = 0; i < command.length(); i++) {
             switch (command.charAt(i)) {
                 case COMMAND_L:
@@ -121,19 +111,16 @@ public class Rover {
                     this.turnRight();
                     break;
                 case COMMAND_M:
-                    synchronized (plateau) {
-                        int[] pre = this.preMove();
-                        if (plateau.isReachable(pre)) {
-                            plateau.setReachable(this.getPosition(), true);
-                            this.move(pre);
-                            plateau.setReachable(this.getPosition(), false);
-                        }
+                    int[] pre = this.preMove();
+                    if (plateau.isReachable(pre)) {
+                        plateau.setReachable(this.getPosition(), true);
+                        this.move(pre);
+                        plateau.setReachable(this.getPosition(), false);
                     }
                     break;
                 default:
                     break;
             }
         }
-        this.stop();
     }
 }

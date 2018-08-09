@@ -1,7 +1,7 @@
 package mobi.cangol;
 
 public class Plateau {
-    private boolean[][] points;
+    private final boolean[][] points;
 
     private Plateau(int maxX, int maxY) {
         points = new boolean[maxX + 1][maxY + 1];
@@ -24,13 +24,13 @@ public class Plateau {
             try {
                 x = Integer.valueOf(array[0]);
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("error command! x{" + array[0] + "} is Invalid");
+                throw new IllegalArgumentException("error command! x=" + array[0] + " is Invalid");
             }
             int y;
             try {
                 y = Integer.valueOf(array[1]);
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("error command! y{" + array[1] + "} is Invalid");
+                throw new IllegalArgumentException("error command! y=" + array[1] + " is Invalid");
             }
             return new Plateau(x, y);
         }
@@ -45,11 +45,13 @@ public class Plateau {
     }
 
     public boolean setReachable(int[] xy, boolean reachable) {
+        boolean result;
         try {
             points[xy[0]][xy[1]] = reachable;
-            return true;
+            result = true;
         } catch (Exception e) {
-            return false;
+            result = false;
         }
+        return result;
     }
 }
