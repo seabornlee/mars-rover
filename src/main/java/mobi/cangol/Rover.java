@@ -46,60 +46,18 @@ public class Rover {
         return new int[]{preX,preY};
     }
 
-    private void move() {
-        switch (direction) {
-            case N:
-                this.y = this.y + 1;
-                break;
-            case S:
-                this.y = this.y - 1;
-                break;
-            case E:
-                this.x = this.x + 1;
-                break;
-            case W:
-                this.x = this.x - 1;
-                break;
-            default:
-                break;
-        }
+    private void move(int[] position) {
+        this.x=position[0];
+        this.y=position[1];
     }
+
     private void turnLeft() {
-        switch (direction) {
-            case N:
-                this.direction =Direction.W;
-                break;
-            case S:
-                this.direction =Direction.E;
-                break;
-            case E:
-                this.direction =Direction.N;
-                break;
-            case W:
-                this.direction =Direction.S;
-                break;
-            default:
-                break;
-        }
+        this.direction=Direction.rotate90Angle(this.direction,true);
+
     }
 
     private void turnRight() {
-        switch (direction) {
-            case N:
-                this.direction =Direction.E;
-                break;
-            case S:
-                this.direction =Direction.W;
-                break;
-            case E:
-                this.direction =Direction.S;
-                break;
-            case W:
-                this.direction =Direction.N;
-                break;
-            default:
-                break;
-        }
+        this.direction=Direction.rotate90Angle(this.direction,false);
     }
 
     private void start() {
@@ -166,9 +124,10 @@ public class Rover {
                     break;
                 case COMMAND_M:
                     synchronized (plateau){
-                        if(plateau.isReachable(this.preMove())){
+                        int[] pre=this.preMove();
+                        if(plateau.isReachable(pre)){
                             plateau.setReachable(this.getPosition(),true);
-                            this.move();
+                            this.move(pre);
                             plateau.setReachable(this.getPosition(),false);
                         }
                     }
